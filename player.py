@@ -35,15 +35,7 @@ class Player(pg.sprite.Sprite):
 
     # rotate on mouse cursor
     def change_angle(self, pos):
-        self.player_angle = (180 / math.pi) * -math.atan((pos[1] - self.rect.y) / (pos[0] - self.rect.x))
-        self.image = pg.transform.rotate(self.orig_img, int(self.player_angle))
-        self.rect = self.image.get_rect(center=(self.rect.x, self.rect.y))
-
-        # mouse_x, mouse_y = pygame.mouse.get_pos()
-        # angle = (180 / math.pi) * -math.atan2(mouse_y - self.y, mouse_x - self.x)
-        # self.image = pygame.transform.rotate(self.original_image, int(angle))
-        # self.rect = self.image.get_rect(center=self.position)
-
-        # _, angle = (pg.mouse.get_pos() - self.pos).as_polar()
-        # self.image = pg.transform.rotozoom(self.orig_img, -angle, 1)
-        # self.rect = self.image.get_rect(center=self.rect.center)
+        x, y = self.rect.x, self.rect.y
+        self.player_angle = -math.degrees(math.atan2((pos[1] - y), (pos[0] - x)))
+        self.image = pg.transform.rotate(self.orig_img, self.player_angle)
+        self.rect = self.image.get_rect(center=self.rect.center)

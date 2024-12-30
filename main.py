@@ -7,6 +7,7 @@ clock = pg.time.Clock()
 screen = pg.display.set_mode((WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))
 player_sprites = pg.sprite.Group()
 player = Player(player_sprites)
+pos = (0, 0)
 
 # main gaming cycle
 while True:
@@ -15,8 +16,8 @@ while True:
         if event.type == pg.QUIT:
             exit()
         if event.type == pg.MOUSEMOTION:
-            player.change_angle(event.pos)
-
+            pos = event.pos
+    player.change_angle(pos)
     player.movement()
     player_sprites.draw(screen)
     clock.tick(FPS)

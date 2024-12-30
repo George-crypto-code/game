@@ -35,7 +35,7 @@ class Player(pg.sprite.Sprite):
 
     # rotate on mouse cursor
     def change_angle(self, pos):
-        x, y = self.rect.x, self.rect.y
+        x, y = self.rect.center
         self.player_angle = -math.degrees(math.atan2((pos[1] - y), (pos[0] - x)))
         self.image = pg.transform.rotate(self.orig_img, self.player_angle)
         self.rect = self.image.get_rect(center=self.rect.center)

@@ -2,6 +2,7 @@ import pygame as pg
 from settings import *
 from player import Player
 from map import Map
+from load_image import load_image
 
 pg.init()
 clock = pg.time.Clock()
@@ -11,9 +12,9 @@ player_sprites = pg.sprite.Group()
 player = Player(player_sprites)
 # set map
 map_sprites = pg.sprite.Group()
-map = Map(map_sprites)
-
-pos = (0, 0)
+_ = Map(map_sprites)
+# aim
+aim_image = pg.transform.scale(load_image("aim.png"), (20, 20))
 
 # main gaming cycle
 while True:
@@ -23,6 +24,7 @@ while True:
             exit()
         if event.type == pg.MOUSEMOTION:
             pos = event.pos
+            pg.mouse.set_visible(False)
 
     # update player
     player.change_angle(pos)
@@ -31,6 +33,9 @@ while True:
     # drawing all things
     map_sprites.draw(screen)
     player_sprites.draw(screen)
+
+    if pg.mouse.get_focused():
+        screen.blit(aim_image, pos)
 
     # system
     clock.tick(FPS)

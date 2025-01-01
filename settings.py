@@ -15,3 +15,7 @@ PLAYER_ANGLE = 0
 # map setting
 WIGHT_OF_MAP = 800
 HEIGHT_OF_MAP = 600
+
+# box settings
+WIGHT_OF_BOX = 50
+HEIGHT_OF_BOX = 50

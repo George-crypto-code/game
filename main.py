@@ -3,19 +3,14 @@ from settings import *
 from player import Player
 from world_map import Map
 from load_image import load_image
+from box import Box
 
 pg.init()
 clock = pg.time.Clock()
 screen = pg.display.set_mode((WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))
-# set player
-player_sprites = pg.sprite.Group()
-player = Player(player_sprites)
-# set map
-map_sprites = pg.sprite.Group()
-_ = Map(map_sprites)
 
 
-# borders
+# class borders
 class Border(pg.sprite.Sprite):
     def __init__(self, x1, y1, x2, y2):
         super().__init__(all_borders)
@@ -28,6 +23,19 @@ class Border(pg.sprite.Sprite):
         self.mask = pg.mask.from_surface(self.image)
 
 
+# set player
+player_sprites = pg.sprite.Group()
+player = Player(player_sprites)
+# set map
+map_sprites = pg.sprite.Group()
+_ = Map(map_sprites)
+# set boxes
+boxes_sprites = pg.sprite.Group()
+Box(boxes_sprites, (100, 50))
+Box(boxes_sprites, (450, 100))
+Box(boxes_sprites, (540, 540))
+Box(boxes_sprites, (250, 200))
+# set borders
 all_borders = pg.sprite.Group()
 horizontal_top_borders = Border(0, 0, WIGHT_OF_MAP - 1, 0)
 horizontal_bot_borders = Border(0, HEIGHT_OF_MAP - 1, WIGHT_OF_MAP - 1, HEIGHT_OF_MAP - 1)
@@ -50,15 +58,17 @@ while True:
 
     # update player
     player.change_angle(mouse_pos)
+    # check player and borders
     player.movement((horizontal_top_borders,
-                    horizontal_bot_borders,
-                    vertical_left_borders,
-                    vertical_right_borders))
+                     horizontal_bot_borders,
+                     vertical_left_borders,
+                     vertical_right_borders))
 
     # drawing all things
     map_sprites.draw(screen)
     player_sprites.draw(screen)
     all_borders.draw(screen)
+    boxes_sprites.draw(screen)
     # drawing aim
     if pg.mouse.get_focused():
         screen.blit(aim_image, mouse_pos)

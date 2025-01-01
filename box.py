@@ -12,4 +12,5 @@ class Box(pg.sprite.Sprite):
         self.image = Box.image
         self.image = pg.transform.scale(self.image, (WIGHT_OF_BOX, HEIGHT_OF_BOX))
         self.rect = self.image.get_rect()
+        self.mask = pg.mask.from_surface(self.image)
         self.rect.x, self.rect.y = pos

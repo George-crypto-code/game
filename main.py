@@ -30,11 +30,11 @@ player = Player(player_sprites)
 map_sprites = pg.sprite.Group()
 _ = Map(map_sprites)
 # set boxes
-boxes_sprites = pg.sprite.Group()
-Box(boxes_sprites, (100, 50))
-Box(boxes_sprites, (450, 100))
-Box(boxes_sprites, (540, 540))
-Box(boxes_sprites, (250, 200))
+all_boxes = pg.sprite.Group()
+Box(all_boxes, (100, 50))
+Box(all_boxes, (450, 100))
+Box(all_boxes, (540, 540))
+Box(all_boxes, (250, 200))
 # set borders
 all_borders = pg.sprite.Group()
 horizontal_top_borders = Border(0, 0, WIGHT_OF_MAP - 1, 0)
@@ -59,16 +59,14 @@ while True:
     # update player
     player.change_angle(mouse_pos)
     # check player and borders
-    player.movement((horizontal_top_borders,
-                     horizontal_bot_borders,
-                     vertical_left_borders,
-                     vertical_right_borders))
+    player.movement((horizontal_top_borders, horizontal_bot_borders, vertical_left_borders, vertical_right_borders),
+                    all_boxes)
 
     # drawing all things
     map_sprites.draw(screen)
     player_sprites.draw(screen)
     all_borders.draw(screen)
-    boxes_sprites.draw(screen)
+    all_boxes.draw(screen)
     # drawing aim
     if pg.mouse.get_focused():
         screen.blit(aim_image, mouse_pos)

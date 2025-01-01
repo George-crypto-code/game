@@ -23,27 +23,31 @@ class Player(pg.sprite.Sprite):
         self.player_angle = PLAYER_ANGLE
 
     # method for movement player
-    def movement(self, all_borders):
+    def movement(self, all_borders, all_boxes):
         keys = pg.key.get_pressed()
         horizontal_top_borders, horizontal_bot_borders, vertical_left_borders, vertical_right_borders = all_borders
         if keys[pg.K_d]:
             self.rect.x += PLAYER_SPEED
-            if pg.sprite.collide_mask(self, vertical_right_borders):
+            if (pg.sprite.collide_mask(self, vertical_right_borders) or
+                    any(pg.sprite.collide_mask(self, elem) for elem in all_boxes)):
                 self.rect.x -= PLAYER_SPEED
 
         if keys[pg.K_a]:
             self.rect.x -= PLAYER_SPEED
-            if pg.sprite.collide_mask(self, vertical_left_borders):
+            if (pg.sprite.collide_mask(self, vertical_left_borders) or
+                    any(pg.sprite.collide_mask(self, elem) for elem in all_boxes)):
                 self.rect.x += PLAYER_SPEED
 
         if keys[pg.K_w]:
             self.rect.y -= PLAYER_SPEED
-            if pg.sprite.collide_mask(self, horizontal_top_borders):
+            if (pg.sprite.collide_mask(self, horizontal_top_borders) or
+                    any(pg.sprite.collide_mask(self, elem) for elem in all_boxes)):
                 self.rect.y += PLAYER_SPEED
 
         if keys[pg.K_s]:
             self.rect.y += PLAYER_SPEED
-            if pg.sprite.collide_mask(self, horizontal_bot_borders):
+            if (pg.sprite.collide_mask(self, horizontal_bot_borders) or
+                    any(pg.sprite.collide_mask(self, elem) for elem in all_boxes)):
                 self.rect.y -= PLAYER_SPEED
 
     # rotate on mouse cursor

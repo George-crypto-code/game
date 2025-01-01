@@ -3,6 +3,7 @@ import math
 from settings import *
 from load_image import load_image
 
+
 # class for main player
 class Player(pg.sprite.Sprite):
     # loading of image
@@ -22,16 +23,28 @@ class Player(pg.sprite.Sprite):
         self.player_angle = PLAYER_ANGLE
 
     # method for movement player
-    def movement(self):
+    def movement(self, all_borders):
         keys = pg.key.get_pressed()
+        horizontal_top_borders, horizontal_bot_borders, vertical_left_borders, vertical_right_borders = all_borders
         if keys[pg.K_d]:
             self.rect.x += PLAYER_SPEED
+            if pg.sprite.collide_mask(self, vertical_right_borders):
+                self.rect.x -= PLAYER_SPEED
+
         if keys[pg.K_a]:
             self.rect.x -= PLAYER_SPEED
+            if pg.sprite.collide_mask(self, vertical_left_borders):
+                self.rect.x += PLAYER_SPEED
+
         if keys[pg.K_w]:
             self.rect.y -= PLAYER_SPEED
+            if pg.sprite.collide_mask(self, horizontal_top_borders):
+                self.rect.y += PLAYER_SPEED
+
         if keys[pg.K_s]:
             self.rect.y += PLAYER_SPEED
+            if pg.sprite.collide_mask(self, horizontal_bot_borders):
+                self.rect.y -= PLAYER_SPEED
 
     # rotate on mouse cursor
     def change_angle(self, pos):

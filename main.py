@@ -51,7 +51,7 @@ vertical_left_borders = Border(0, 0, 0, HEIGHT_OF_MAP - 1)
 vertical_right_borders = Border(WIGHT_OF_MAP - 1, 0, WIGHT_OF_MAP - 1, HEIGHT_OF_MAP - 1)
 
 # aim
-aim_image = pg.transform.scale(load_image("aim.png"), (20, 20))
+aim_image = pg.transform.scale(load_image("aim.png"), (WIGHT_OF_AIM, HEIGHT_OF_AIM))
 mouse_pos = (0, 0)
 
 # main gaming cycle
@@ -63,6 +63,8 @@ while True:
         if event.type == pg.MOUSEMOTION:
             mouse_pos = event.pos
             pg.mouse.set_visible(False)
+        if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
+            player.shoot(event.pos)
 
     # update player
     player.change_angle(mouse_pos)

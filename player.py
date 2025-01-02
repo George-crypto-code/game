@@ -21,6 +21,8 @@ class Player(pg.sprite.Sprite):
         self.rect.x = 0
         self.rect.y = 0
         self.player_angle = PLAYER_ANGLE
+        # player health
+        self.player_health = PLAYER_MAX_HEALTH
 
     # method for movement player
     def movement(self, all_borders, all_boxes):
@@ -56,3 +58,8 @@ class Player(pg.sprite.Sprite):
         self.player_angle = -math.degrees(math.atan2((pos[1] - y), (pos[0] - x)))
         self.image = pg.transform.rotate(self.orig_img, self.player_angle)
         self.rect = self.image.get_rect(center=self.rect.center)
+
+    def shoot(self, pos):
+        x, y = pos
+        x += WIGHT_OF_AIM // 2
+        y += HEIGHT_OF_AIM // 2

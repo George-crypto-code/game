@@ -1,9 +1,10 @@
 import pygame as pg
 from settings import *
 from player import Player
+from enemy import Enemy
 from world_map import Map
-from load_image import load_image
 from box import Box
+from load_image import load_image
 
 pg.init()
 clock = pg.time.Clock()
@@ -26,6 +27,13 @@ class Border(pg.sprite.Sprite):
 # set player
 player_sprites = pg.sprite.Group()
 player = Player(player_sprites)
+# set enemies
+enemy_sprites = pg.sprite.Group()
+Enemy(enemy_sprites, (600, 300))
+Enemy(enemy_sprites, (320, 200))
+Enemy(enemy_sprites, (350, 350))
+Enemy(enemy_sprites, (520, 80))
+Enemy(enemy_sprites, (250, 400))
 # set map
 map_sprites = pg.sprite.Group()
 _ = Map(map_sprites)
@@ -61,10 +69,13 @@ while True:
     # check player and borders
     player.movement((horizontal_top_borders, horizontal_bot_borders, vertical_left_borders, vertical_right_borders),
                     all_boxes)
+    # update enemies
+    enemy_sprites.update()
 
     # drawing all things
     map_sprites.draw(screen)
     player_sprites.draw(screen)
+    enemy_sprites.draw(screen)
     all_borders.draw(screen)
     all_boxes.draw(screen)
     # drawing aim

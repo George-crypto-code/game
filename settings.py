@@ -6,11 +6,14 @@ HEIGHT_OF_SCREEN = 600
 FPS = 60
 
 # player settings
-# speed of player
 PLAYER_SPEED = 1
 WIGHT_OF_PLAYER = 50
 HEIGHT_OF_PLAYER = 50
 PLAYER_ANGLE = 0
+# enemy settings
+ENEMY_SPEED = 1
+WIGHT_OF_ENEMY = 50
+HEIGHT_OF_ENEMY = 50
 
 # map setting
 WIGHT_OF_MAP = 800

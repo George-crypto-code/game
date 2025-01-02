@@ -20,10 +20,14 @@ class Enemy(pg.sprite.Sprite):
         self.x, self.y = pos
         self.path = randrange(30, 50)
         self.enemy_speed = ENEMY_SPEED
+        self.enemy_health = ENEMY_MAX_HEALTH
 
     def update(self):
         self.rect.y += self.enemy_speed
         if self.rect.y - self.y >= self.path or self.rect.y <= self.y:
             self.enemy_speed *= -1
             self.image = pg.transform.rotate(self.image, 180)
+
+        if self.enemy_health <= 0:
+            self.kill()
 

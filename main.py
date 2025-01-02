@@ -4,7 +4,7 @@ from player import Player
 from enemy import Enemy
 from world_map import Map
 from box import Box
-from load_image import load_image
+from aim import Aim
 
 pg.init()
 clock = pg.time.Clock()
@@ -50,9 +50,10 @@ horizontal_bot_borders = Border(0, HEIGHT_OF_MAP - 1, WIGHT_OF_MAP - 1, HEIGHT_O
 vertical_left_borders = Border(0, 0, 0, HEIGHT_OF_MAP - 1)
 vertical_right_borders = Border(WIGHT_OF_MAP - 1, 0, WIGHT_OF_MAP - 1, HEIGHT_OF_MAP - 1)
 
-# aim
-aim_image = pg.transform.scale(load_image("aim.png"), (WIGHT_OF_AIM, HEIGHT_OF_AIM))
 mouse_pos = (0, 0)
+# aim
+aim_sprites = pg.sprite.Group()
+aim_image = Aim(aim_sprites, mouse_pos)
 
 # main gaming cycle
 while True:
@@ -64,8 +65,10 @@ while True:
             mouse_pos = event.pos
             pg.mouse.set_visible(False)
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-            player.shoot(event.pos)
-
+            if enemy := aim_image.check_shoot(enemy_sprites):
+                player.shoot(event.pos, enemy)
+    # draw aim
+    aim_sprites.update(mouse_pos)
     # update player
     player.change_angle(mouse_pos)
     # check player and borders
@@ -80,9 +83,7 @@ while True:
     enemy_sprites.draw(screen)
     all_borders.draw(screen)
     all_boxes.draw(screen)
-    # drawing aim
-    if pg.mouse.get_focused():
-        screen.blit(aim_image, mouse_pos)
+    aim_sprites.draw(screen)
 
     # system
     clock.tick(FPS)

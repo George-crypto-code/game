@@ -59,7 +59,8 @@ class Player(pg.sprite.Sprite):
         self.image = pg.transform.rotate(self.orig_img, self.player_angle)
         self.rect = self.image.get_rect(center=self.rect.center)
 
-    def shoot(self, pos):
+    def shoot(self, pos, enemy):
         x, y = pos
         x += WIGHT_OF_AIM // 2
         y += HEIGHT_OF_AIM // 2
+        enemy[0].enemy_health -= 1

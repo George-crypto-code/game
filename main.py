@@ -26,7 +26,7 @@ class Border(pg.sprite.Sprite):
 
 # set player
 player_sprites = pg.sprite.Group()
-player = Player(player_sprites)
+player = Player(player_sprites, screen)
 # set enemies
 enemy_sprites = pg.sprite.Group()
 Enemy(enemy_sprites, (600, 300))
@@ -66,7 +66,7 @@ while True:
             pg.mouse.set_visible(False)
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             if enemy := aim_image.check_shoot(enemy_sprites):
-                player.shoot(event.pos, enemy)
+                player.shoot(event.pos, enemy, all_boxes)
     # draw aim
     aim_sprites.update(mouse_pos)
     # update player

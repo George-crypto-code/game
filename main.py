@@ -52,7 +52,7 @@ while True:
             mouse_pos = event.pos
             pg.mouse.set_visible(False)
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-            if enemy := aim_image.check_shoot(enemy_sprites):
+            if enemy := aim_image.check_shoot(enemy_sprites):  # if aim collide with enemy than raise shoot method
                 player.shoot(event.pos, enemy, all_boxes)
     # draw aim
     aim_sprites.update(mouse_pos)

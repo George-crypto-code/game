@@ -3,7 +3,7 @@ import pygame as pg
 from system_files.settings import *
 from system_files.load_image import load_image
 
-
+# this class need for check on not collide shoot with box
 class Bullet(pg.sprite.Sprite):
     image = load_image("bullet.png")
 

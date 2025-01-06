@@ -66,17 +66,21 @@ class Player(pg.sprite.Sprite):
         self.mask = pg.mask.from_surface(self.image)
         self.rect = self.image.get_rect(center=self.rect.center)
 
+    # method for check hit-and-miss to bos
     def shoot(self, pos, enemy, all_boxes):
         x, y = pos
         x += WIGHT_OF_AIM // 2
         y += HEIGHT_OF_AIM // 2
         i, j = self.rect.center
+        # shoot object
         a = Bullet((i, j), (x, y))
         flag = True
+        # if bullet collide with box than enemy don`t give hit
         for box in all_boxes:
             if pg.sprite.collide_mask(a, box):
                 flag = False
                 break
+        # hit or not
         if flag:
             enemy[0].enemy_health -= 1
         else:
@@ -84,5 +88,7 @@ class Player(pg.sprite.Sprite):
         a.kill()
 
     def check_health(self):
+        # check player health
+        # if health 0 than player die
         if self.player_health <= 0:
             self.kill()

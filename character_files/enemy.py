@@ -37,6 +37,7 @@ class Enemy(pg.sprite.Sprite):
 
         if self.enemy_health <= 0:
             self.kill()
+    "try to enemy shoot"
 
     #     a = Bullet((self.rect.x, self.rect.y), (player.rect.x, player.rect.y))
     #     flag = True

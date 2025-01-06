@@ -70,7 +70,8 @@ class Player(pg.sprite.Sprite):
         x, y = pos
         x += WIGHT_OF_AIM // 2
         y += HEIGHT_OF_AIM // 2
-        a = Bullet((self.rect.x, self.rect.y), (x, y))
+        i, j = self.rect.center
+        a = Bullet((i, j), (x, y))
         flag = True
         for box in all_boxes:
             if pg.sprite.collide_mask(a, box):

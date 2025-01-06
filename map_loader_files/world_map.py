@@ -1,6 +1,6 @@
 import pygame as pg
-from load_image import load_image
-from settings import *
+from system_files.load_image import load_image
+from system_files.settings import *
 
 
 class Map(pg.sprite.Sprite):

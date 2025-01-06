@@ -1,7 +1,7 @@
 import math
 import pygame as pg
-from settings import *
-from load_image import load_image
+from system_files.settings import *
+from system_files.load_image import load_image
 
 
 class Bullet(pg.sprite.Sprite):

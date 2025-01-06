@@ -1,8 +1,8 @@
 import pygame as pg
 import math
-from settings import *
-from load_image import load_image
-from bullet import Bullet
+from system_files.settings import *
+from system_files.load_image import load_image
+from character_files.bullet import Bullet
 
 
 # class for main player

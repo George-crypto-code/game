@@ -1,28 +1,15 @@
 import pygame as pg
-from settings import *
-from player import Player
-from enemy import Enemy
-from world_map import Map
-from box import Box
-from aim import Aim
+from system_files.settings import *
+from character_files.player import Player
+from character_files.enemy import Enemy
+from map_loader_files.world_map import Map
+from map_loader_files.border import Border
+from map_loader_files.box import Box
+from map_loader_files.aim import Aim
 
 pg.init()
 clock = pg.time.Clock()
 screen = pg.display.set_mode((WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))
-
-
-# class borders
-class Border(pg.sprite.Sprite):
-    def __init__(self, x1, y1, x2, y2):
-        super().__init__(all_borders)
-        if x1 == x2:
-            self.image = pg.Surface([1, y2 - y1])
-            self.rect = pg.Rect(x1, y1, 1, y2 - y1)
-        else:
-            self.image = pg.Surface([x2 - x1, 1])
-            self.rect = pg.Rect(x1, y1, x2 - x1, 1)
-        self.mask = pg.mask.from_surface(self.image)
-
 
 # set player
 player_sprites = pg.sprite.Group()
@@ -45,10 +32,10 @@ Box(all_boxes, (540, 540))
 Box(all_boxes, (250, 200))
 # set borders
 all_borders = pg.sprite.Group()
-horizontal_top_borders = Border(0, 0, WIGHT_OF_MAP - 1, 0)
-horizontal_bot_borders = Border(0, HEIGHT_OF_MAP - 1, WIGHT_OF_MAP - 1, HEIGHT_OF_MAP - 1)
-vertical_left_borders = Border(0, 0, 0, HEIGHT_OF_MAP - 1)
-vertical_right_borders = Border(WIGHT_OF_MAP - 1, 0, WIGHT_OF_MAP - 1, HEIGHT_OF_MAP - 1)
+horizontal_top_borders = Border(all_borders, 0, 0, WIGHT_OF_MAP - 1, 0)
+horizontal_bot_borders = Border(all_borders, 0, HEIGHT_OF_MAP - 1, WIGHT_OF_MAP - 1, HEIGHT_OF_MAP - 1)
+vertical_left_borders = Border(all_borders, 0, 0, 0, HEIGHT_OF_MAP - 1)
+vertical_right_borders = Border(all_borders, WIGHT_OF_MAP - 1, 0, WIGHT_OF_MAP - 1, HEIGHT_OF_MAP - 1)
 
 mouse_pos = (0, 0)
 # aim

@@ -8,7 +8,7 @@ pg.display.set_mode((500, 500))
 
 # function for loading image
 def load_image(name, colorkey=None):
-    fullname = os.path.join('data', 'images',  name)
+    fullname = os.path.join('data', 'images', name)
     if not os.path.isfile(fullname):
         print(f"Файл с изображением '{fullname}' не найден")
         sys.exit()

@@ -70,12 +70,12 @@ class Player(pg.sprite.Sprite):
         x, y = pos
         x += WIGHT_OF_AIM // 2
         y += HEIGHT_OF_AIM // 2
-        git = pg.sprite.Group()
-        a = Bullet((self.rect.x, self.rect.y), (x, y), git)
+        a = Bullet((self.rect.x, self.rect.y), (x, y))
         flag = True
         for box in all_boxes:
             if pg.sprite.collide_mask(a, box):
                 flag = False
+                break
         if flag:
             enemy[0].enemy_health -= 1
         else:

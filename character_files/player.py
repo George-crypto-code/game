@@ -81,3 +81,7 @@ class Player(pg.sprite.Sprite):
         else:
             print("miss")
         a.kill()
+
+    def check_health(self):
+        if self.player_health <= 0:
+            self.kill()

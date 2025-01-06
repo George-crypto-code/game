@@ -1,6 +1,7 @@
 import pygame as pg
 from system_files.settings import *
 from system_files.load_image import load_image
+from character_files.bullet import Bullet
 from random import randrange
 
 
@@ -21,13 +22,26 @@ class Enemy(pg.sprite.Sprite):
         self.path = randrange(30, 50)
         self.enemy_speed = ENEMY_SPEED
         self.enemy_health = ENEMY_MAX_HEALTH
+        self.movement_flag = True
 
-    def update(self):
-        self.rect.y += self.enemy_speed
-        if self.rect.y - self.y >= self.path or self.rect.y <= self.y:
-            self.enemy_speed *= -1
-            self.image = pg.transform.rotate(self.image, 180)
+    def update(self, player, all_boxes):
+        if self.movement_flag:
+            self.rect.y += self.enemy_speed
+            if self.rect.y - self.y >= self.path or self.rect.y <= self.y:
+                self.enemy_speed *= -1
+                self.image = pg.transform.rotate(self.image, 180)
 
         if self.enemy_health <= 0:
             self.kill()
 
+        a = Bullet((self.rect.x, self.rect.y), (player.rect.x, player.rect.y))
+        flag = True
+        for box in all_boxes:
+            if pg.sprite.collide_mask(a, box):
+                flag = False
+                break
+
+        if flag:
+            self.movement_flag = False
+        else:
+            self.movement_flag = True

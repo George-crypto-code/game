@@ -62,7 +62,7 @@ while True:
     player.movement((horizontal_top_borders, horizontal_bot_borders, vertical_left_borders, vertical_right_borders),
                     all_boxes)
     # update enemies
-    enemy_sprites.update()
+    enemy_sprites.update(player, all_boxes)
 
     # drawing all things
     map_sprites.draw(screen)

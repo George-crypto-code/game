@@ -72,6 +72,9 @@ while True:
     all_boxes.draw(screen)
     aim_sprites.draw(screen)
 
+    pg.draw.line(screen, "red", player.rect.center,
+                 (mouse_pos[0] + WIGHT_OF_AIM // 2, mouse_pos[1] + HEIGHT_OF_AIM // 2))
+
     # system
     clock.tick(FPS)
     pg.display.flip()

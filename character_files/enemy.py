@@ -37,26 +37,24 @@ class Enemy(pg.sprite.Sprite):
 
         if self.enemy_health <= 0:
             self.kill()
-    "try to enemy shoot"
+        a = Bullet((self.rect.x, self.rect.y), (player.rect.x, player.rect.y))
+        flag = True
+        for box in all_boxes:
+            if pg.sprite.collide_mask(a, box):
+                flag = False
+                break
 
-    #     a = Bullet((self.rect.x, self.rect.y), (player.rect.x, player.rect.y))
-    #     flag = True
-    #     for box in all_boxes:
-    #         if pg.sprite.collide_mask(a, box):
-    #             flag = False
-    #             break
-    #
-    #     if flag:
-    #         self.movement_flag = False
-    #         self.change_angle(player)
-    #     else:
-    #         self.movement_flag = True
-    #     a.kill()
-    #
-    # def change_angle(self, player):
-    #     x, y = self.rect.center
-    #     i, j = player.rect.center
-    #     self.enemy_angle = -math.degrees(math.atan2((j - y), (i - x)))
-    #     self.image = pg.transform.rotate(self.orig_img, self.enemy_angle)
-    #     self.mask = pg.mask.from_surface(self.image)
-    #     self.rect = self.image.get_rect(center=self.rect.center)
+        if flag:
+            self.movement_flag = False
+            self.change_angle(player)
+        else:
+            self.movement_flag = True
+        a.kill()
+
+    def change_angle(self, player):
+        x, y = self.rect.center
+        i, j = player.rect.center
+        self.enemy_angle = -math.degrees(math.atan2((j - y), (i - x)))
+        self.image = pg.transform.rotate(self.orig_img, self.enemy_angle)
+        self.mask = pg.mask.from_surface(self.image)
+        self.rect = self.image.get_rect(center=self.rect.center)

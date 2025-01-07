@@ -5,7 +5,7 @@ from system_files.settings import *
 
 class Map(pg.sprite.Sprite):
     # loading of image
-    image = load_image("field.png")
+    image = load_image(r"level_screen_images\field.png")
 
     def __init__(self, sprites):
         super().__init__(sprites)

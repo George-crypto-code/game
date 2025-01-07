@@ -5,7 +5,7 @@ from system_files.settings import *
 
 class Aim(pg.sprite.Sprite):
     # loading of image
-    image = load_image("aim.png")
+    image = load_image(r"level_screen_images\aim.png")
 
     def __init__(self, sprites, pos):
         super().__init__(sprites)

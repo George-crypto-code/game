@@ -8,9 +8,9 @@ from character_files.bullet import Bullet
 # class for main player
 class Player(pg.sprite.Sprite):
     # loading of image
-    image = load_image("player.png")
+    image = load_image(r"level_screen_images\player.png")
 
-    def __init__(self, sprites, screen):
+    def __init__(self, sprites, screen, pos):
         super().__init__(sprites)
         self.image = Player.image
         # scale for image because image is very big
@@ -19,8 +19,7 @@ class Player(pg.sprite.Sprite):
         self.orig_img = self.image.copy()
         self.rect = self.image.get_rect()
         self.mask = pg.mask.from_surface(self.image)
-        self.rect.x = 0
-        self.rect.y = 0
+        self.rect.x, self.rect.y = pos
         self.player_angle = PLAYER_ANGLE
         self.screen = screen
         # player health

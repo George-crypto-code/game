@@ -6,14 +6,19 @@ from map_loader_files.world_map import Map
 from map_loader_files.border import Border
 from map_loader_files.box import Box
 from map_loader_files.aim import Aim
+from system_files.start_screen import start_screen
+from system_files.menu_screen import menu_screen
 
 pg.init()
 clock = pg.time.Clock()
 screen = pg.display.set_mode((WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))
 
+start_screen(screen, clock)
+menu_screen(screen, clock)
+
 # set player
 player_sprites = pg.sprite.Group()
-player = Player(player_sprites, screen)
+player = Player(player_sprites, screen, (0, 0))
 # set enemies
 enemy_sprites = pg.sprite.Group()
 Enemy(enemy_sprites, (600, 300))
@@ -21,9 +26,6 @@ Enemy(enemy_sprites, (320, 200))
 Enemy(enemy_sprites, (350, 350))
 Enemy(enemy_sprites, (520, 80))
 Enemy(enemy_sprites, (250, 400))
-# set map
-map_sprites = pg.sprite.Group()
-_ = Map(map_sprites)
 # set boxes
 all_boxes = pg.sprite.Group()
 Box(all_boxes, (100, 50))
@@ -36,6 +38,9 @@ horizontal_top_borders = Border(all_borders, 0, 0, WIGHT_OF_MAP - 1, 0)
 horizontal_bot_borders = Border(all_borders, 0, HEIGHT_OF_MAP - 1, WIGHT_OF_MAP - 1, HEIGHT_OF_MAP - 1)
 vertical_left_borders = Border(all_borders, 0, 0, 0, HEIGHT_OF_MAP - 1)
 vertical_right_borders = Border(all_borders, WIGHT_OF_MAP - 1, 0, WIGHT_OF_MAP - 1, HEIGHT_OF_MAP - 1)
+# set map
+map_sprites = pg.sprite.Group()
+_ = Map(map_sprites)
 
 mouse_pos = (0, 0)
 # aim

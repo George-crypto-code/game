@@ -5,7 +5,7 @@ from system_files.load_image import load_image
 
 # this class need for check on not collide shoot with box
 class Bullet(pg.sprite.Sprite):
-    image = load_image("bullet.png")
+    image = load_image(r"level_screen_images\bullet.png")
 
     def __init__(self, start_pos, finish_pos):
         super().__init__()

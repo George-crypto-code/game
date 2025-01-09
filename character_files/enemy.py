@@ -2,8 +2,7 @@ import pygame as pg
 import math
 from system_files.settings import *
 from system_files.load_image import load_image
-from character_files.bullet import Bullet
-from random import randrange
+from random import randrange, choice
 
 
 # class for enemy
@@ -21,35 +20,37 @@ class Enemy(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.mask = pg.mask.from_surface(self.image)
         self.rect.x, self.rect.y = pos
-        self.x, self.y = pos
-        self.path = randrange(30, 50)
+        self.path = pos[1], pos[1] + randrange(30, 50)
         self.enemy_speed = ENEMY_SPEED
         self.enemy_health = ENEMY_MAX_HEALTH
         self.enemy_angle = ENEMY_ANGLE
-        self.movement_flag = True
+        self.movement_flag, self.timer_flag = True, False
+        self.MYEVENTTYPE = pg.USEREVENT + 1
 
     def update(self, player, all_boxes):
+        if self.enemy_health <= 0:
+            self.kill()
+
+        x, y = player.rect.center
+        i, j = self.rect.center
+
+        if all(False if box.rect.clipline((x, y), (i, j)) else True for box in all_boxes):
+            self.movement_flag = False
+            self.change_angle(player)
+            for event in pg.event.get():
+                if event.type == self.MYEVENTTYPE:
+                    if choice([0, 1]) == 1:
+                        player.player_health -= 1
+
         if self.movement_flag:
             self.rect.y += self.enemy_speed
-            if self.rect.y - self.y >= self.path or self.rect.y <= self.y:
+            if self.rect.y < self.path[0] or self.rect.y > self.path[1]:
                 self.enemy_speed *= -1
                 self.image = pg.transform.rotate(self.image, 180)
 
-        if self.enemy_health <= 0:
-            self.kill()
-        a = Bullet((self.rect.x, self.rect.y), (player.rect.x, player.rect.y))
-        flag = True
-        for box in all_boxes:
-            if pg.sprite.collide_mask(a, box):
-                flag = False
-                break
-
-        if flag:
-            self.movement_flag = False
-            self.change_angle(player)
-        else:
-            self.movement_flag = True
-        a.kill()
+        if self.movement_flag and not self.timer_flag:
+            self.timer_flag = True
+            pg.time.set_timer(self.MYEVENTTYPE, 1000)
 
     def change_angle(self, player):
         x, y = self.rect.center

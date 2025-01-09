@@ -2,7 +2,6 @@ import pygame as pg
 import math
 from system_files.settings import *
 from system_files.load_image import load_image
-from character_files.bullet import Bullet
 
 
 # class for main player
@@ -65,26 +64,17 @@ class Player(pg.sprite.Sprite):
         self.mask = pg.mask.from_surface(self.image)
         self.rect = self.image.get_rect(center=self.rect.center)
 
-    # method for check hit-and-miss to bos
+    # method for check hit-and-miss to box
     def shoot(self, pos, enemy, all_boxes):
         x, y = pos
         x += WIGHT_OF_AIM // 2
         y += HEIGHT_OF_AIM // 2
         i, j = self.rect.center
-        # shoot object
-        a = Bullet((i, j), (x, y))
-        flag = True
-        # if bullet collide with box than enemy don`t give hit
-        for box in all_boxes:
-            if pg.sprite.collide_mask(a, box):
-                flag = False
-                break
         # hit or not
-        if flag:
+        if all(False if box.rect.clipline((x, y), (i, j)) else True for box in all_boxes):
             enemy[0].enemy_health -= 1
         else:
             print("miss")
-        a.kill()
 
     def check_health(self):
         # check player health

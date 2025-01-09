@@ -29,6 +29,7 @@ while True:
         if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
             if enemy := a.aim_image.check_shoot(a.enemy_sprites):  # if aim collide with enemy than raise shoot method
                 a.player.shoot(event.pos, enemy, a.all_boxes)
+
     # main method in each level
     all_sprites.update(mouse_pos)  # it updates all sprites and draw them
 

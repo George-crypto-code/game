@@ -55,6 +55,7 @@ class All_sprites(pg.sprite.Sprite):
         self.player.movement((self.horizontal_top_borders, self.horizontal_bot_borders, self.vertical_left_borders,
                               self.vertical_right_borders),
                              self.all_boxes)
+        self.player.check_health()
         # update enemies
         self.enemy_sprites.update(self.player, self.all_boxes)
 

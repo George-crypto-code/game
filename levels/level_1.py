@@ -10,7 +10,7 @@ from map_loader_files.aim import Aim
 
 # class for each level
 # very eazy to add new level
-class All_sprites(pg.sprite.Sprite):
+class AllSprites(pg.sprite.Sprite):
     def __init__(self, all_sprites, screen):
         super().__init__(all_sprites)
         self.screen = screen

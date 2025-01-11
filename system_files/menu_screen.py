@@ -1,6 +1,5 @@
 import pygame as pg
 from system_files.load_image import load_image
-from system_files.start_screen import start_screen
 from system_files.settings import *
 
 
@@ -41,6 +40,7 @@ def menu_screen(screen, clock):
                     return 0
                 if 10 < x < 86 and 10 < y < 86:
                     return 1
+            pg.draw.rect(screen, "black", (100, 100, 600, 400), 3)
 
         pg.display.flip()
         clock.tick(FPS)

@@ -73,8 +73,8 @@ class Player(pg.sprite.Sprite):
         # hit or not
         if all(False if box.rect.clipline((x, y), (i, j)) else True for box in all_boxes):
             enemy[0].enemy_health -= 1
-        else:
-            print("miss")
+            return True
+        return False
 
     def check_health(self):
         # check player health

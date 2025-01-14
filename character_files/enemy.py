@@ -15,21 +15,21 @@ class Enemy(pg.sprite.Sprite):
         self.image = Enemy.image
         # scale for image because image is very big
         self.image = pg.transform.scale(self.image, (WIGHT_OF_ENEMY, HEIGHT_OF_ENEMY))
-        self.orig_img = self.image.copy()
+        self.orig_img = self.image.copy()  # image for correct rotate
         self.image = pg.transform.rotate(self.image, 270)
         self.rect = self.image.get_rect()
         self.mask = pg.mask.from_surface(self.image)
         self.rect.x, self.rect.y = pos
-        self.path = pos[1], pos[1] + randrange(30, 50)
+        self.path = pos[1], pos[1] + randrange(30, 50)  # length which enemy will go
         self.enemy_speed = ENEMY_SPEED
         self.enemy_health = ENEMY_MAX_HEALTH
         self.enemy_angle = ENEMY_ANGLE
         self.movement_flag, self.timer_flag = True, False
-        self.MYEVENTTYPE = pg.USEREVENT + 1
+        self.MYEVENTTYPE = pg.USEREVENT + 1  # event for enemy shoot
 
     def update(self, player, all_boxes):
-        if self.enemy_health <= 0:
-            self.kill()
+        if self.enemy_health <= 0:  # if enemy health zero
+            self.kill()  # enemy die
 
         x, y = player.rect.center
         i, j = self.rect.center
@@ -39,7 +39,8 @@ class Enemy(pg.sprite.Sprite):
             self.change_angle(player)
             for event in pg.event.get():
                 if event.type == self.MYEVENTTYPE:
-                    if choice([0, 1]) == 1:
+                    if player.player_health > 0:
+                        pg.mixer.Sound(r'data\sounds\shoot.wav').play().set_volume(0.3)
                         player.player_health -= 1
 
         if self.movement_flag:
@@ -50,9 +51,9 @@ class Enemy(pg.sprite.Sprite):
 
         if self.movement_flag and not self.timer_flag:
             self.timer_flag = True
-            pg.time.set_timer(self.MYEVENTTYPE, 1000)
+            pg.time.set_timer(self.MYEVENTTYPE, 10)
 
-    def change_angle(self, player):
+    def change_angle(self, player):  # when enemy see the player he watches on him
         x, y = self.rect.center
         i, j = player.rect.center
         self.enemy_angle = -math.degrees(math.atan2((j - y), (i - x)))

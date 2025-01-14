@@ -37,9 +37,9 @@ def menu_screen(screen, clock):
             if event.type == pg.MOUSEBUTTONDOWN:
                 x, y = event.pos
                 if left < x < left + 100 and top < y < top + 100:
-                    return 0
-                if 10 < x < 86 and 10 < y < 86:
                     return 1
+                if 10 < x < 86 and 10 < y < 86:
+                    return 0
             pg.draw.rect(screen, "black", (100, 100, 600, 400), 3)
 
         pg.display.flip()

@@ -11,7 +11,7 @@ def start(screen, clock):  # func for start screen when player in it
         if ans == "play":  # if player choose the play btn than screen close
             return
         elif ans == "options":  # if player choose the options than open options screen
-            options_screen(screen, clock)
+            options_screen(screen, clock, LOUD_OF_GAME)
 
 
 def prepare():
@@ -47,16 +47,16 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
                 if enemy := sprites.aim_image.check_shoot(
                         sprites.enemy_sprites):  # if aim collide with enemy than raise shoot method
                     if sprites.player.shoot(event.pos, enemy, sprites.all_boxes):
-                        pg.mixer.Sound(r'data\sounds\shoot.wav').play().set_volume(0.3)
+                        pg.mixer.Sound(r'data\sounds\shoot.wav').play().set_volume(LOUD_OF_GAME)
                         pg.mixer.Sound(r'data\sounds\hit.wav').play()
                     else:
-                        pg.mixer.Sound(r'data\sounds\shoot_miss.wav').play().set_volume(0.3)
+                        pg.mixer.Sound(r'data\sounds\shoot_miss.wav').play().set_volume(LOUD_OF_GAME)
                 else:
-                    pg.mixer.Sound(r'data\sounds\shoot.wav').play().set_volume(0.3)
+                    pg.mixer.Sound(r'data\sounds\shoot.wav').play().set_volume(LOUD_OF_GAME)
 
             if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 pg.mouse.set_visible(True)
-                ans = options_screen(screen, clock)
+                ans = options_screen(screen, clock, LOUD_OF_GAME)
                 if ans == 1:
                     return "home"
 

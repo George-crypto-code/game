@@ -30,3 +30,6 @@ HEIGHT_OF_BOX = 50
 # aim settings
 WIGHT_OF_AIM = 20
 HEIGHT_OF_AIM = 20
+
+# loud of game
+LOUD_OF_GAME = 1

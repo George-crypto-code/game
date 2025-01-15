@@ -6,13 +6,13 @@ from system_files.settings import *
 def menu_screen(screen, clock):
     left, top = 150, 150
     # draw main fon
-    fon = pg.transform.scale(load_image(r'menu_screen_images\background.jpg'), (WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))
+    fon = pg.transform.scale(load_image(('menu_screen_images', 'background.jpg')), (WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))
     screen.blit(fon, (0, 0))
 
-    level_1 = load_image(r'menu_screen_images\level_1.png')
+    level_1 = load_image(('menu_screen_images', 'level_1.png'))
     screen.blit(level_1, (left, top))
 
-    arrow = load_image(r'menu_screen_images\arrow.png')
+    arrow = load_image(('menu_screen_images', 'arrow.png'))
     screen.blit(arrow, (10, 10))
 
     while True:
@@ -23,15 +23,15 @@ def menu_screen(screen, clock):
             if event.type == pg.MOUSEMOTION:
                 x, y = event.pos
                 if left < x < left + 100 and top < y < top + 100:
-                    level_1 = load_image(r'menu_screen_images\level_1_act.png')
+                    level_1 = load_image(('menu_screen_images', 'level_1_act.png'))
                 else:
-                    level_1 = load_image(r'menu_screen_images\level_1.png')
+                    level_1 = load_image(('menu_screen_images', 'level_1.png'))
                 screen.blit(level_1, (left, top))
 
                 if 10 < x < 86 and 10 < y < 86:
-                    arrow = load_image(r'menu_screen_images\arrow_act.png')
+                    arrow = load_image(('menu_screen_images', 'arrow_act.png'))
                 else:
-                    arrow = load_image(r'menu_screen_images\arrow.png')
+                    arrow = load_image(('menu_screen_images', 'arrow.png'))
                 screen.blit(arrow, (10, 10))
 
             if event.type == pg.MOUSEBUTTONDOWN:

@@ -8,7 +8,7 @@ from random import randrange, choice
 # class for enemy
 class Enemy(pg.sprite.Sprite):
     # loading of image
-    image = load_image(r"level_screen_images\player.png")
+    image = load_image(("level_screen_images", "player.png"))
 
     def __init__(self, sprites, pos):
         super().__init__(sprites)

@@ -7,7 +7,7 @@ from system_files.load_image import load_image
 # class for main player
 class Player(pg.sprite.Sprite):
     # loading of image
-    image = load_image(r"level_screen_images\player.png")
+    image = load_image(("level_screen_images", "player.png"))
 
     def __init__(self, sprites, screen, pos):
         super().__init__(sprites)

@@ -1,6 +1,7 @@
 import pygame as pg
 from system_files.load_image import load_image
 from system_files.settings import *
+from system_files.options_screen import options_screen
 
 
 def start_screen(screen, clock):
@@ -45,10 +46,10 @@ def start_screen(screen, clock):
             if event.type == pg.MOUSEBUTTONDOWN:
                 x, y = event.pos
                 if 229 < x < 229 + 343 and 100 < y < 100 + 91:
-                    return
+                    return "play"
 
                 if 229 < x < 229 + 343 and 220 < y < 220 + 91:
-                    print(2)
+                    return "options"
 
                 if 229 < x < 229 + 343 and 340 < y < 340 + 91:
                     exit()

@@ -32,4 +32,4 @@ WIGHT_OF_AIM = 20
 HEIGHT_OF_AIM = 20
 
 # loud of game
-LOUD_OF_GAME = 1
+LOUD_OF_GAME = 0.1

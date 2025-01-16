@@ -16,10 +16,6 @@ def start(screen, clock):  # func for start screen when player in it
 
 def prepare():
     global screen, clock, all_sprites, sprites, mouse_pos, AllSprites
-    pg.init()  # pygame initialization
-    pg.mixer.init()  # for sound effects
-    clock = pg.time.Clock()  # clock for tick of game
-    screen = pg.display.set_mode((WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))  # game screen
     start(screen, clock)  # start screen
     while not (level := menu_screen(screen, clock)):  # while player not choose the level, menu not hide
         start(screen, clock)  # if player choose the arrow back
@@ -48,7 +44,7 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
                         sprites.enemy_sprites):  # if aim collide with enemy than raise shoot method
                     if sprites.player.shoot(event.pos, enemy, sprites.all_boxes):
                         pg.mixer.Sound(r'data\sounds\shoot.wav').play().set_volume(LOUD_OF_GAME)
-                        pg.mixer.Sound(r'data\sounds\hit.wav').play()
+                        pg.mixer.Sound(r'data\sounds\hit.wav').play().set_volume(LOUD_OF_GAME)
                     else:
                         pg.mixer.Sound(r'data\sounds\shoot_miss.wav').play().set_volume(LOUD_OF_GAME)
                 else:
@@ -73,6 +69,10 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
 
 
 if __name__ == "__main__":
+    pg.init()  # pygame initialization
+    pg.mixer.init()  # for sound effects
+    clock = pg.time.Clock()  # clock for tick of game
+    screen = pg.display.set_mode((WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))  # game screen
     prepare()
     while True:
         res = main(screen, clock, all_sprites, sprites, mouse_pos)

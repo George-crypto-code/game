@@ -39,8 +39,9 @@ class Enemy(pg.sprite.Sprite):
             self.change_angle(player)
             for event in pg.event.get():
                 if event.type == self.MYEVENTTYPE:
+                    print(1)
                     if player.player_health > 0:
-                        pg.mixer.Sound(r'data\sounds\shoot.wav').play().set_volume(0.3)
+                        pg.mixer.Sound(r'data\sounds\shoot.wav').play().set_volume(LOUD_OF_GAME)
                         player.player_health -= 1
 
         if self.movement_flag:
@@ -51,7 +52,7 @@ class Enemy(pg.sprite.Sprite):
 
         if self.movement_flag and not self.timer_flag:
             self.timer_flag = True
-            pg.time.set_timer(self.MYEVENTTYPE, 10)
+            pg.time.set_timer(self.MYEVENTTYPE, 1000)
 
     def change_angle(self, player):  # when enemy see the player he watches on him
         x, y = self.rect.center

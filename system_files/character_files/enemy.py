@@ -1,8 +1,8 @@
 import pygame as pg
 import math
 from system_files.settings import *
-from system_files.load_image import load_image
-from random import randrange, choice
+from system_files.screen_files.load_image import load_image
+from random import randrange
 
 
 # class for enemy
@@ -37,11 +37,13 @@ class Enemy(pg.sprite.Sprite):
         if all(False if box.rect.clipline((x, y), (i, j)) else True for box in all_boxes):
             self.movement_flag = False
             self.change_angle(player)
+            shoot = pg.mixer.Sound(r'data/sounds/sound_effects/shoot.wav')
+            shoot.set_volume(LOUD_OF_GAME)
             for event in pg.event.get():
                 if event.type == self.MYEVENTTYPE:
                     print(1)
                     if player.player_health > 0:
-                        pg.mixer.Sound(r'data\sounds\shoot.wav').play().set_volume(LOUD_OF_GAME)
+                        shoot.play()
                         player.player_health -= 1
 
         if self.movement_flag:

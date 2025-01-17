@@ -1,9 +1,9 @@
 import pygame as pg
 from system_files.settings import *
 from system_files.start_screen import start_screen
-from system_files.menu_screen import menu_screen
-from system_files.lose_screen import lose_screen
-from system_files.options_screen import options_screen
+from system_files.screen_files.menu_screen import menu_screen
+from system_files.screen_files.lose_screen import lose_screen
+from system_files.screen_files.options_screen import options_screen
 
 
 def start(screen, clock):  # func for start screen when player in it
@@ -30,6 +30,12 @@ def prepare():
 
 def main(screen, clock, all_sprites, sprites, mouse_pos):
     # main gaming cycled
+    shoot = pg.mixer.Sound(r'data/sounds/sound_effects/shoot.wav')
+    shoot.set_volume(LOUD_OF_GAME)
+    hit = pg.mixer.Sound(r'data/sounds/sound_effects/hit.wav')
+    hit.set_volume(LOUD_OF_GAME)
+    shoot_miss = pg.mixer.Sound(r'data/sounds/sound_effects/shoot_miss.wav')
+    shoot_miss.set_volume(LOUD_OF_GAME)
     while True:
         screen.fill('black')
         for event in pg.event.get():
@@ -40,15 +46,14 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
                 pg.mouse.set_visible(False)
 
             if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                if enemy := sprites.aim_image.check_shoot(
-                        sprites.enemy_sprites):  # if aim collide with enemy than raise shoot method
+                if enemy := sprites.aim_image.check_shoot(sprites.enemy_sprites):  # if aim collide with enemy than raise shoot method
                     if sprites.player.shoot(event.pos, enemy, sprites.all_boxes):
-                        pg.mixer.Sound(r'data\sounds\shoot.wav').play().set_volume(LOUD_OF_GAME)
-                        pg.mixer.Sound(r'data\sounds\hit.wav').play().set_volume(LOUD_OF_GAME)
+                        shoot.play()
+                        hit.play()
                     else:
-                        pg.mixer.Sound(r'data\sounds\shoot_miss.wav').play().set_volume(LOUD_OF_GAME)
+                        shoot_miss.play()
                 else:
-                    pg.mixer.Sound(r'data\sounds\shoot.wav').play().set_volume(LOUD_OF_GAME)
+                    shoot.play()
 
             if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 pg.mouse.set_visible(True)

@@ -1,5 +1,5 @@
 import pygame as pg
-from system_files.load_image import load_image
+from system_files.screen_files.load_image import load_image
 from system_files.settings import *
 
 

@@ -1,7 +1,6 @@
 import pygame as pg
-from system_files.load_image import load_image
+from system_files.screen_files.load_image import load_image
 from system_files.settings import *
-from system_files.options_screen import options_screen
 
 
 def start_screen(screen, clock):

@@ -9,6 +9,8 @@ from random import randrange
 class Enemy(pg.sprite.Sprite):
     # loading of image
     image = load_image(("level_screen_images", "player.png"))
+    shoot = pg.mixer.Sound(r'data/sounds/sound_effects/shoot.wav')
+    shoot.set_volume(update_loud_of_game())
 
     def __init__(self, sprites, pos):
         super().__init__(sprites)
@@ -37,13 +39,11 @@ class Enemy(pg.sprite.Sprite):
         if all(False if box.rect.clipline((x, y), (i, j)) else True for box in all_boxes):
             self.movement_flag = False
             self.change_angle(player)
-            shoot = pg.mixer.Sound(r'data/sounds/sound_effects/shoot.wav')
-            shoot.set_volume(LOUD_OF_GAME)
             for event in pg.event.get():
                 if event.type == self.MYEVENTTYPE:
                     print(1)
                     if player.player_health > 0:
-                        shoot.play()
+                        Enemy.shoot.play()
                         player.player_health -= 1
 
         if self.movement_flag:

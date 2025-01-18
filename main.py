@@ -11,7 +11,7 @@ def start(screen, clock):  # func for start screen when player in it
         if ans == "play":  # if player choose the play btn than screen close
             return
         elif ans == "options":  # if player choose the options than open options screen
-            options_screen(screen, clock, LOUD_OF_GAME)
+            options_screen(screen, clock)
 
 
 def prepare():
@@ -31,12 +31,13 @@ def prepare():
 def main(screen, clock, all_sprites, sprites, mouse_pos):
     # main gaming cycled
     shoot = pg.mixer.Sound(r'data/sounds/sound_effects/shoot.wav')
-    shoot.set_volume(LOUD_OF_GAME)
     hit = pg.mixer.Sound(r'data/sounds/sound_effects/hit.wav')
-    hit.set_volume(LOUD_OF_GAME)
     shoot_miss = pg.mixer.Sound(r'data/sounds/sound_effects/shoot_miss.wav')
-    shoot_miss.set_volume(LOUD_OF_GAME)
+    LOUD_OF_GAME = update_loud_of_game()
     while True:
+        shoot.set_volume(LOUD_OF_GAME)
+        hit.set_volume(LOUD_OF_GAME)
+        shoot_miss.set_volume(LOUD_OF_GAME)
         screen.fill('black')
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -57,8 +58,9 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
 
             if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 pg.mouse.set_visible(True)
-                ans = options_screen(screen, clock, LOUD_OF_GAME)
-                if ans == 1:
+                ans = options_screen(screen, clock)
+                LOUD_OF_GAME = update_loud_of_game()
+                if ans == "home":
                     return "home"
 
         if sprites.player.player_health <= 0:

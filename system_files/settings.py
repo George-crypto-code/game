@@ -31,5 +31,8 @@ HEIGHT_OF_BOX = 50
 WIGHT_OF_AIM = 20
 HEIGHT_OF_AIM = 20
 
+
 # loud of game
-LOUD_OF_GAME = 0.1
+def update_loud_of_game():
+    with open(r"system_files\sound_effect_loud.txt") as loud:
+        return float(loud.readline())

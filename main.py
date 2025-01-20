@@ -1,9 +1,22 @@
+import csv
 import pygame as pg
 from system_files.settings import *
 from system_files.start_screen import start_screen
 from system_files.screen_files.menu_screen import menu_screen
 from system_files.screen_files.lose_screen import lose_screen
 from system_files.screen_files.options_screen import options_screen
+from levels.level_1 import AllSprites as AllSprites_1
+from levels.level_2 import AllSprites as AllSprites_2
+from levels.level_3 import AllSprites as AllSprites_3
+
+
+def choose_level_sprites(level):
+    if level == 1:  # import level which player chose
+        return AllSprites_1(all_sprites, screen)  # the chosen level
+    elif level == 2:
+        return AllSprites_2(all_sprites, screen)
+    elif level == 3:
+        return AllSprites_3(all_sprites, screen)
 
 
 def start(screen, clock):  # func for start screen when player in it
@@ -15,17 +28,15 @@ def start(screen, clock):  # func for start screen when player in it
 
 
 def prepare():
-    global screen, clock, all_sprites, sprites, mouse_pos, AllSprites
+    global all_sprites, sprites, mouse_pos
+    pg.mouse.set_visible(True)
     start(screen, clock)  # start screen
-    while not (level := menu_screen(screen, clock)):  # while player not choose the level, menu not hide
+    while not (level_of_game := menu_screen(screen, clock)):  # while player not choose the level, menu not hide
         start(screen, clock)  # if player choose the arrow back
-
-    if level == 1:  # import level which player chose
-        from levels.level_1 import AllSprites
-
     all_sprites = pg.sprite.Group()  # all sprites for more readable code and it eazy to refix levels
-    sprites = AllSprites(all_sprites, screen)  # the chosen level
+    sprites = choose_level_sprites(level_of_game)
     mouse_pos = (0, 0)
+    return level_of_game
 
 
 def main(screen, clock, all_sprites, sprites, mouse_pos):
@@ -47,7 +58,8 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
                 pg.mouse.set_visible(False)
 
             if event.type == pg.MOUSEBUTTONDOWN and event.button == 1:
-                if enemy := sprites.aim_image.check_shoot(sprites.enemy_sprites):  # if aim collide with enemy than raise shoot method
+                if enemy := sprites.aim_image.check_shoot(
+                        sprites.enemy_sprites):  # if aim collide with enemy than raise shoot method
                     if sprites.player.shoot(event.pos, enemy, sprites.all_boxes):
                         shoot.play()
                         hit.play()
@@ -63,11 +75,14 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
                 if ans == "home":
                     return "home"
 
+        if not sprites.enemy_sprites:
+            return "win"
+
         if sprites.player.player_health <= 0:
             pg.mouse.set_visible(True)
             lose_screen(screen, clock)
             return "lose"
-            # main method in each level
+        # main method in each level
         all_sprites.update(mouse_pos)  # it updates all sprites and draw them
 
         # system
@@ -80,12 +95,21 @@ if __name__ == "__main__":
     pg.mixer.init()  # for sound effects
     clock = pg.time.Clock()  # clock for tick of game
     screen = pg.display.set_mode((WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))  # game screen
-    prepare()
+    level = prepare()
     while True:
         res = main(screen, clock, all_sprites, sprites, mouse_pos)
-        if res == "lose":
+        if res == "home":
+            level = prepare()
+        elif res == "win":
+            with open(r"data\levels.csv", encoding="utf8") as csvfile:
+                data_levels = list(csv.reader(csvfile, delimiter=';', quotechar='"'))
+            data_levels[level][1] = "1"
+            with open(r"data\levels.csv", mode="w", newline='', encoding="utf8") as csvfile:
+                writer = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+                for string in data_levels:
+                    writer.writerow(string)
+            level = prepare()
+        elif res == "lose":
             all_sprites = pg.sprite.Group()
-            sprites = AllSprites(all_sprites, screen)
+            sprites = choose_level_sprites(level)
             mouse_pos = (0, 0)
-        elif res == "home":
-            prepare()

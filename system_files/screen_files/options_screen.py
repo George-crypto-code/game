@@ -21,7 +21,7 @@ def options_screen(screen, clock):
 
     # cords for sound effect btn
     left_sound, top_sound = 100, 250
-    name_of_sound = "sound_offed" if slider_x == 240 else "sound"
+    name_of_sound = "sound_offed" if slider_x <= 243 else "sound"
     # draw sound effect btn
     sound = pg.transform.scale(load_image(("options_screen_images", name_of_sound + ".png")), (100, 100))
     screen.blit(sound, (left_sound, top_sound))
@@ -51,7 +51,7 @@ def options_screen(screen, clock):
                 # if flag than slider start moving
                 if moving and 240 <= slider_x + event.rel[0] <= 640:
                     slider_x += event.rel[0]
-                    name_of_sound = "sound_offed" if slider_x == 240 else "sound"
+                    name_of_sound = "sound_offed" if slider_x <= 243 else "sound"
                 else:
                     moving = False
 

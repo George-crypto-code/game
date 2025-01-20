@@ -1,4 +1,5 @@
 import pygame as pg
+import csv
 from system_files.screen_files.load_image import load_image
 from system_files.settings import *
 
@@ -9,8 +10,13 @@ def menu_screen(screen, clock):
     fon = pg.transform.scale(load_image(('menu_screen_images', 'background.jpg')), (WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))
     screen.blit(fon, (0, 0))
 
-    level_1 = load_image(('menu_screen_images', 'level_1.png'))
-    screen.blit(level_1, (left, top))
+    with open(r"data\levels.csv", encoding="utf8") as csvfile:
+        data_levels = tuple(csv.reader(csvfile, delimiter=';', quotechar='"'))
+
+    for i in range(1, 4):
+        level_path = "complete_levels" if data_levels[i][1] == "1" else "levels"
+        level = load_image(('menu_screen_images', level_path, f'level_{i}.png'))
+        screen.blit(level, (left * (i), top))
 
     arrow = load_image(('menu_screen_images', 'arrow.png'))
     screen.blit(arrow, (10, 10))
@@ -22,11 +28,13 @@ def menu_screen(screen, clock):
 
             if event.type == pg.MOUSEMOTION:
                 x, y = event.pos
-                if left < x < left + 100 and top < y < top + 100:
-                    level_1 = load_image(('menu_screen_images', 'level_1_act.png'))
-                else:
-                    level_1 = load_image(('menu_screen_images', 'level_1.png'))
-                screen.blit(level_1, (left, top))
+                for i in range(1, 4):
+                    level_path = "complete_levels" if data_levels[i][1] == "1" else "levels"
+                    if left * i < x < left * i + 100 and top < y < top + 100:
+                        level = load_image(('menu_screen_images', level_path, f'level_{i}_act.png'))
+                    else:
+                        level = load_image(('menu_screen_images', level_path, f'level_{i}.png'))
+                    screen.blit(level, (left * i, top))
 
                 if 10 < x < 86 and 10 < y < 86:
                     arrow = load_image(('menu_screen_images', 'arrow_act.png'))
@@ -36,8 +44,9 @@ def menu_screen(screen, clock):
 
             if event.type == pg.MOUSEBUTTONDOWN:
                 x, y = event.pos
-                if left < x < left + 100 and top < y < top + 100:
-                    return 1
+                for i in range(1, 4):
+                    if left * i < x < left * i + 100 and top < y < top + 100:
+                        return i
                 if 10 < x < 86 and 10 < y < 86:
                     return 0
             pg.draw.rect(screen, "black", (100, 100, 600, 400), 3)

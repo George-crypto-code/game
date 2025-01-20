@@ -16,20 +16,22 @@ class AllSprites(pg.sprite.Sprite):
         self.screen = screen
         # set player
         self.player_sprites = pg.sprite.Group()
-        self.player = Player(self.player_sprites, screen, (0, 0))
+        self.player = Player(self.player_sprites, screen, (1, 475))
         # set enemies
         self.enemy_sprites = pg.sprite.Group()
-        Enemy(self.enemy_sprites, (600, 300), "vertical")
-        Enemy(self.enemy_sprites, (320, 200), "vertical")
-        Enemy(self.enemy_sprites, (350, 350), "vertical")
-        Enemy(self.enemy_sprites, (520, 80), "vertical")
-        Enemy(self.enemy_sprites, (250, 400), "vertical")
+        Enemy(self.enemy_sprites, (725, 275), "vertical")
+        Enemy(self.enemy_sprites, (250, 75), "horizontal")
+        Enemy(self.enemy_sprites, (200, 120), "horizontal")
+        Enemy(self.enemy_sprites, (600, 20), "vertical")
         # set boxes
         self.all_boxes = pg.sprite.Group()
-        Box(self.all_boxes, (100, 50))
-        Box(self.all_boxes, (450, 100))
-        Box(self.all_boxes, (540, 540))
-        Box(self.all_boxes, (250, 200))
+        Box(self.all_boxes, (1, 400))
+        Box(self.all_boxes, (50, 400))
+        Box(self.all_boxes, (250, 410))
+        Box(self.all_boxes, (220, 170))
+        Box(self.all_boxes, (532, 55))
+        Box(self.all_boxes, (650, 325))
+        Box(self.all_boxes, (675, 275))
         # set borders
         self.all_borders = pg.sprite.Group()
         self.horizontal_top_borders = Border(self.all_borders, 0, 0, WIGHT_OF_MAP - 1, 0)

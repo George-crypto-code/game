@@ -3,6 +3,7 @@ import pygame as pg
 from system_files.settings import *
 from system_files.start_screen import start_screen
 from system_files.screen_files.menu_screen import menu_screen
+from system_files.screen_files.victory_screen import victory_screen
 from system_files.screen_files.lose_screen import lose_screen
 from system_files.screen_files.options_screen import options_screen
 from levels.level_1 import AllSprites as AllSprites_1
@@ -79,8 +80,6 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
             return "win"
 
         if sprites.player.player_health <= 0:
-            pg.mouse.set_visible(True)
-            lose_screen(screen, clock)
             return "lose"
         # main method in each level
         all_sprites.update(mouse_pos)  # it updates all sprites and draw them
@@ -98,6 +97,7 @@ if __name__ == "__main__":
     level = prepare()
     while True:
         res = main(screen, clock, all_sprites, sprites, mouse_pos)
+        pg.mouse.set_visible(True)
         if res == "home":
             level = prepare()
         elif res == "win":
@@ -108,8 +108,12 @@ if __name__ == "__main__":
                 writer = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 for string in data_levels:
                     writer.writerow(string)
-            level = prepare()
+            if (victory_ans := victory_screen(screen, clock)) == "home":
+                level = prepare()
+            else:
+                level += victory_ans
         elif res == "lose":
-            all_sprites = pg.sprite.Group()
-            sprites = choose_level_sprites(level)
-            mouse_pos = (0, 0)
+            lose_screen(screen, clock)
+        all_sprites = pg.sprite.Group()
+        sprites = choose_level_sprites(level)
+        mouse_pos = (0, 0)

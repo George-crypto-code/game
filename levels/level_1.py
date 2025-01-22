@@ -19,10 +19,10 @@ class AllSprites(pg.sprite.Sprite):
         self.player = Player(self.player_sprites, screen, (0, 0))
         # set enemies
         self.enemy_sprites = pg.sprite.Group()
-        Enemy(self.enemy_sprites, (600, 300), "vertical")
-        Enemy(self.enemy_sprites, (320, 200), "vertical")
-        Enemy(self.enemy_sprites, (350, 350), "vertical")
-        Enemy(self.enemy_sprites, (520, 80), "vertical")
+        # Enemy(self.enemy_sprites, (600, 300), "vertical")
+        # Enemy(self.enemy_sprites, (320, 200), "vertical")
+        # Enemy(self.enemy_sprites, (350, 350), "vertical")
+        # Enemy(self.enemy_sprites, (520, 80), "vertical")
         Enemy(self.enemy_sprites, (250, 400), "vertical")
         # set boxes
         self.all_boxes = pg.sprite.Group()

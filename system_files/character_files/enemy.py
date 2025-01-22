@@ -45,7 +45,7 @@ class Enemy(pg.sprite.Sprite):
             self.change_angle(player)
             for event in pg.event.get():
                 if event.type == self.MYEVENTTYPE:
-                    print(1)
+                    Enemy.shoot.set_volume(update_loud_of_game())
                     if player.player_health > 0:
                         Enemy.shoot.play()
                         player.player_health -= 1

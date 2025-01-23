@@ -108,7 +108,7 @@ if __name__ == "__main__":
                 writer = csv.writer(csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 for string in data_levels:
                     writer.writerow(string)
-            if (victory_ans := victory_screen(screen, clock)) == "home":
+            if (victory_ans := victory_screen(screen, clock, level)) == "home":
                 level = prepare()
             else:
                 level += victory_ans

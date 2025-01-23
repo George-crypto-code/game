@@ -46,6 +46,8 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
     hit = pg.mixer.Sound(r'data/sounds/sound_effects/hit.wav')
     shoot_miss = pg.mixer.Sound(r'data/sounds/sound_effects/shoot_miss.wav')
     LOUD_OF_GAME = update_loud_of_game()
+    SHOOT_EVENT_TYPE = pg.USEREVENT + 1
+    pg.time.set_timer(SHOOT_EVENT_TYPE, 1000)
     while True:
         shoot.set_volume(LOUD_OF_GAME)
         hit.set_volume(LOUD_OF_GAME)
@@ -75,6 +77,10 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
                 LOUD_OF_GAME = update_loud_of_game()
                 if ans == "home":
                     return "home"
+
+            if event.type == SHOOT_EVENT_TYPE:
+                for enemy in sprites.enemy_sprites:
+                    enemy.shoot(sprites.player, sprites.all_boxes)
 
         if not sprites.enemy_sprites:
             return "win"

@@ -9,8 +9,8 @@ from random import randrange
 class Enemy(pg.sprite.Sprite):
     # loading of image
     image = load_image(("level_screen_images", "player.png"))
-    shoot = pg.mixer.Sound(r'data/sounds/sound_effects/shoot.wav')
-    shoot.set_volume(update_loud_of_game())
+    shoot_sound = pg.mixer.Sound(r'data/sounds/sound_effects/shoot.wav')
+    shoot_sound.set_volume(update_loud_of_game())
 
     def __init__(self, sprites, pos, direction):
         super().__init__(sprites)
@@ -31,7 +31,6 @@ class Enemy(pg.sprite.Sprite):
         self.enemy_health = ENEMY_MAX_HEALTH
         self.enemy_angle = ENEMY_ANGLE
         self.movement_flag, self.timer_flag = True, False
-        self.MYEVENTTYPE = pg.USEREVENT + 1  # event for enemy shoot
 
     def update(self, player, all_boxes):
         if self.enemy_health <= 0:  # if enemy health zero
@@ -43,12 +42,6 @@ class Enemy(pg.sprite.Sprite):
         if all(False if box.rect.clipline((x, y), (i, j)) else True for box in all_boxes):
             self.movement_flag = False
             self.change_angle(player)
-            for event in pg.event.get():
-                if event.type == self.MYEVENTTYPE:
-                    Enemy.shoot.set_volume(update_loud_of_game())
-                    if player.player_health > 0:
-                        Enemy.shoot.play()
-                        player.player_health -= 1
 
         if self.movement_flag:
             if self.direction == "vertical":
@@ -62,10 +55,6 @@ class Enemy(pg.sprite.Sprite):
                     self.enemy_speed *= -1
                     self.image = pg.transform.rotate(self.image, 180)
 
-        if self.movement_flag and not self.timer_flag:
-            self.timer_flag = True
-            pg.time.set_timer(self.MYEVENTTYPE, 1000)
-
     def change_angle(self, player):  # when enemy see the player he watches on him
         x, y = self.rect.center
         i, j = player.rect.center
@@ -73,3 +62,12 @@ class Enemy(pg.sprite.Sprite):
         self.image = pg.transform.rotate(self.orig_img, self.enemy_angle)
         self.mask = pg.mask.from_surface(self.image)
         self.rect = self.image.get_rect(center=self.rect.center)
+
+    def shoot(self, player, all_boxes):
+        x, y = player.rect.center
+        i, j = self.rect.center
+        if all(False if box.rect.clipline((x, y), (i, j)) else True for box in all_boxes):
+            Enemy.shoot_sound.set_volume(update_loud_of_game())
+            if player.player_health > 0:
+                Enemy.shoot_sound.play()
+                player.player_health -= 1

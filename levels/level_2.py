@@ -16,22 +16,20 @@ class AllSprites(pg.sprite.Sprite):
         self.screen = screen
         # set player
         self.player_sprites = pg.sprite.Group()
-        self.player = Player(self.player_sprites, screen, (1, 475))
+        self.player = Player(self.player_sprites, screen, (WIGHT_OF_SCREEN / 10 * 0, HEIGHT_OF_SCREEN / 10 * 8.5))
         # set enemies
         self.enemy_sprites = pg.sprite.Group()
-        Enemy(self.enemy_sprites, (725, 275), "vertical")
-        Enemy(self.enemy_sprites, (250, 75), "horizontal")
-        Enemy(self.enemy_sprites, (200, 120), "horizontal")
-        Enemy(self.enemy_sprites, (600, 20), "vertical")
+        Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 8, HEIGHT_OF_SCREEN / 10 * 1), "vertical")
+        Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 3, HEIGHT_OF_SCREEN / 10 * 1), "horizontal")
+        Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 3, HEIGHT_OF_SCREEN / 10 * 2), "horizontal")
+        Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 0, HEIGHT_OF_SCREEN / 10 * 5), "horizontal")
         # set boxes
         self.all_boxes = pg.sprite.Group()
-        Box(self.all_boxes, (1, 400))
-        Box(self.all_boxes, (50, 400))
-        Box(self.all_boxes, (250, 410))
-        Box(self.all_boxes, (220, 170))
-        Box(self.all_boxes, (532, 55))
-        Box(self.all_boxes, (650, 325))
-        Box(self.all_boxes, (675, 275))
+        Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 1, HEIGHT_OF_SCREEN / 10 * 7))
+        Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 0.5, HEIGHT_OF_SCREEN / 10 * 7))
+        Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 0, HEIGHT_OF_SCREEN / 10 * 7))
+        Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 3, HEIGHT_OF_SCREEN / 10 * 3))
+        Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 7, HEIGHT_OF_SCREEN / 10 * 2))
         # set borders
         self.all_borders = pg.sprite.Group()
         self.horizontal_top_borders = Border(self.all_borders, 0, 0, WIGHT_OF_MAP - 1, 0)

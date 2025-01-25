@@ -19,22 +19,22 @@ class AllSprites(pg.sprite.Sprite):
         self.player = Player(self.player_sprites, screen, (0, 0))
         # set enemies
         self.enemy_sprites = pg.sprite.Group()
-        Enemy(self.enemy_sprites, (600, 300), "vertical")
-        Enemy(self.enemy_sprites, (320, 200), "vertical")
-        Enemy(self.enemy_sprites, (350, 350), "vertical")
-        Enemy(self.enemy_sprites, (520, 80), "vertical")
-        Enemy(self.enemy_sprites, (250, 400), "vertical")
+        Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 8, HEIGHT_OF_SCREEN / 10 * 6), "vertical")
+        Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 5, HEIGHT_OF_SCREEN / 10 * 3), "vertical")
+        Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 6, HEIGHT_OF_SCREEN / 10 * 1), "vertical")
+        Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 3, HEIGHT_OF_SCREEN / 10 * 9), "horizontal")
         # set boxes
         self.all_boxes = pg.sprite.Group()
-        Box(self.all_boxes, (100, 50))
-        Box(self.all_boxes, (450, 100))
-        Box(self.all_boxes, (540, 540))
-        Box(self.all_boxes, (250, 200))
+        Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 5, HEIGHT_OF_SCREEN / 10 * 1))
+        Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 1, HEIGHT_OF_SCREEN / 10 * 1))
+        Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 7, HEIGHT_OF_SCREEN / 10 * 6))
+        Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 4, HEIGHT_OF_SCREEN / 10 * 3))
+        Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 3, HEIGHT_OF_SCREEN / 10 * 7))
+        Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 2, HEIGHT_OF_SCREEN / 10 * 7))
         # set borders
         self.all_borders = pg.sprite.Group()
         self.horizontal_top_borders = Border(self.all_borders, 0, 0, WIGHT_OF_MAP - 1, 0)
-        self.horizontal_bot_borders = Border(self.all_borders, 0, HEIGHT_OF_MAP - 1, WIGHT_OF_MAP - 1,
-                                             HEIGHT_OF_MAP - 1)
+        self.horizontal_bot_borders = Border(self.all_borders, 0, HEIGHT_OF_MAP - 1, WIGHT_OF_MAP - 1, HEIGHT_OF_MAP - 1)
         self.vertical_left_borders = Border(self.all_borders, 0, 0, 0, HEIGHT_OF_MAP - 1)
         self.vertical_right_borders = Border(self.all_borders, WIGHT_OF_MAP - 1, 0, WIGHT_OF_MAP - 1, HEIGHT_OF_MAP - 1)
         # set map

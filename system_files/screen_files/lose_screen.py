@@ -1,5 +1,6 @@
 import pygame as pg
 from system_files.screen_files.load_image import load_image
+from system_files.screen_files.button import Button
 from system_files.settings import *
 
 
@@ -7,28 +8,15 @@ def lose_screen(screen, clock):
     # draw main fon
     fon = pg.transform.scale(load_image(('lose_screen_images', 'game_over.jpg')), (WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))
     screen.blit(fon, (0, 0))
-
-    restart_btn = pg.transform.scale(load_image(('lose_screen_images', 'restart.png')), (150, 150))
-    left, top = WIGHT_OF_SCREEN // 2 - 75, 450
-    screen.blit(restart_btn, (left, top))
+    size = WIGHT_OF_SCREEN / 8, WIGHT_OF_SCREEN / 8
+    left, top = (WIGHT_OF_SCREEN - size[0]) / 2, HEIGHT_OF_SCREEN / 5 * 4
+    restart_btn = Button(load_image(('lose_screen_images', 'restart.png')),
+                         load_image(('lose_screen_images', 'restart_act.png')), "restart", (left, top), *size)
 
     while True:
         for event in pg.event.get():
-            if event.type == pg.QUIT:
-                exit()
-
-            if event.type == pg.MOUSEMOTION:
-                x, y = event.pos
-                if left < x < left + 150 and top < y < top + 150:
-                    restart_btn = pg.transform.scale(load_image(('lose_screen_images', 'restart_act.png')), (150, 150))
-                else:
-                    restart_btn = pg.transform.scale(load_image(('lose_screen_images', 'restart.png')), (150, 150))
-                screen.blit(restart_btn, (left, top))
-
-            if event.type == pg.MOUSEBUTTONDOWN:
-                x, y = event.pos
-                if left < x < left + 150 and top < y < top + 150:
-                    return
-
+            if (a := restart_btn.check_event(event)) is not None:
+                return a
+        restart_btn.draw(screen)
         pg.display.flip()
         clock.tick(FPS)

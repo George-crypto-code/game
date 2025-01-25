@@ -1,6 +1,7 @@
 import pygame as pg
 from time import sleep
 from system_files.screen_files.load_image import load_image
+from system_files.screen_files.button import Button
 from system_files.settings import *
 
 
@@ -19,55 +20,40 @@ def victory_screen(screen, clock, level):
                           (HEIGHT_OF_SCREEN - HEIGHT_OF_SCREEN * shift) // 2))
         pg.display.flip()
         clock.tick(FPS)
-
+    size = WIGHT_OF_SCREEN / 10, WIGHT_OF_SCREEN / 10
     next_level_flag, previous_level_flag = False, False
     if level < 3:
         next_level_flag = True
-        next_level = pg.transform.scale(load_image(('victory_screen_images', 'next_level.png')), (100, 100))
-        screen.blit(next_level, (next_level_left := 450, next_level_top := 500))
+        next_level_left, next_level_top = WIGHT_OF_SCREEN / 10 * 6, HEIGHT_OF_SCREEN / 4 * 3
+        next_level = Button(load_image(('victory_screen_images', 'next_level.png')),
+                            load_image(('victory_screen_images', 'next_level_act.png')), 1,
+                            (next_level_left, next_level_top), *size)
+
     if level > 1:
         previous_level_flag = True
-        previous_level = pg.transform.scale(load_image(('victory_screen_images', 'previous_level.png')), (100, 100))
-        screen.blit(previous_level, (previous_level_left := 250, previous_level_top := 500))
-    home_btn = pg.transform.scale(load_image(('victory_screen_images', 'home_btn.png')), (100, 100))
-    screen.blit(home_btn, (home_btn_left := 350, home_btn_top := 500))
+        previous_level_left, previous_level_top = WIGHT_OF_SCREEN / 10 * 3, HEIGHT_OF_SCREEN / 4 * 3
+        previous_level = Button(load_image(('victory_screen_images', 'previous_level.png')),
+                                load_image(('victory_screen_images', 'previous_level_act.png')), 1,
+                                (previous_level_left, previous_level_top), *size)
+
+    home_btn = Button(load_image(('victory_screen_images', 'home_btn.png')),
+                      load_image(('victory_screen_images', 'home_btn_act.png')), "home",
+                      ((WIGHT_OF_SCREEN - size[0]) / 2, HEIGHT_OF_SCREEN / 4 * 3), *size)
 
     while True:
         for event in pg.event.get():
-            if event.type == pg.QUIT:
-                exit()
-            if event.type == pg.MOUSEMOTION:
-                x, y = event.pos
-                if previous_level_flag:
-                    if previous_level_left <= x <= previous_level_left + 100 and previous_level_top <= y <= previous_level_top + 100:
-                        previous_level = pg.transform.scale(load_image(('victory_screen_images', 'previous_level_act.png')), (100, 100))
-                    else:
-                        previous_level = pg.transform.scale(load_image(('victory_screen_images', 'previous_level.png')), (100, 100))
-                    screen.blit(previous_level, (previous_level_left, previous_level_top))
-
-                if next_level_flag:
-                    if next_level_left <= x <= next_level_left + 100 and next_level_top <= y <= next_level_top + 100:
-                        next_level = pg.transform.scale(load_image(('victory_screen_images', 'next_level_act.png')), (100, 100))
-                    else:
-                        next_level = pg.transform.scale(load_image(('victory_screen_images', 'next_level.png')), (100, 100))
-                    screen.blit(next_level, (next_level_left, next_level_top))
-
-                if home_btn_left <= x <= home_btn_left + 100 and home_btn_top <= y <= home_btn_top + 100:
-                    home_btn = pg.transform.scale(load_image(('victory_screen_images', 'home_btn_act.png')), (100, 100))
-                else:
-                    home_btn = pg.transform.scale(load_image(('victory_screen_images', 'home_btn.png')), (100, 100))
-                screen.blit(home_btn, (home_btn_left, home_btn_top))
-
-            if event.type == pg.MOUSEBUTTONDOWN:
-                x, y = event.pos
-                if (previous_level_flag and previous_level_left <= x <= previous_level_left + 100
-                        and previous_level_top <= y <= previous_level_top + 100):
-                    return -1
-                if (next_level_flag and next_level_left <= x <= next_level_left + 100
-                        and next_level_top <= y <= next_level_top + 100):
-                    return 1
-                if home_btn_left <= x <= home_btn_left + 100 and home_btn_top <= y <= home_btn_top + 100:
-                    return "home"
-
+            if next_level_flag:
+                if (a := next_level.check_event(event)) is not None:
+                    return a
+            if previous_level_flag:
+                if (a := previous_level.check_event(event)) is not None:
+                    return a
+            if (a := home_btn.check_event(event)) is not None:
+                return a
+        if next_level_flag:
+            next_level.draw(screen)
+        if previous_level_flag:
+            previous_level.draw(screen)
+        home_btn.draw(screen)
         pg.display.flip()
         clock.tick(FPS)

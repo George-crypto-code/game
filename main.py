@@ -1,7 +1,8 @@
 import csv
 import pygame as pg
+from time import sleep
 from system_files.settings import *
-from system_files.start_screen import start_screen
+from system_files.screen_files.start_screen import start_screen
 from system_files.screen_files.menu_screen import menu_screen
 from system_files.screen_files.victory_screen import victory_screen
 from system_files.screen_files.lose_screen import lose_screen
@@ -26,6 +27,9 @@ def start(screen, clock):  # func for start screen when player in it
             return
         elif ans == "options":  # if player choose the options than open options screen
             options_screen(screen, clock)
+        else:
+            sleep(0.5)
+            exit()
 
 
 def prepare():
@@ -99,7 +103,7 @@ if __name__ == "__main__":
     pg.init()  # pygame initialization
     pg.mixer.init()  # for sound effects
     clock = pg.time.Clock()  # clock for tick of game
-    screen = pg.display.set_mode((WIGHT_OF_SCREEN, HEIGHT_OF_SCREEN))  # game screen
+    screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)  # game screen
     level = prepare()
     while True:
         res = main(screen, clock, all_sprites, sprites, mouse_pos)

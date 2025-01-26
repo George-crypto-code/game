@@ -42,11 +42,6 @@ def options_screen(screen, clock):
             if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 return None
 
-            if slider.getValue() == 0:
-                curr_sound_btn = sound_btn_off
-            else:
-                curr_sound_btn = sound_btn_on
-
             if (a := home_btn.check_event(event)) is not None:
                 return a
 
@@ -57,9 +52,14 @@ def options_screen(screen, clock):
                     curr_sound_btn = sound_btn_on
                 else:
                     curr_sound_btn = sound_btn_off
+        if loud_of_game == 0:
+            curr_sound_btn = sound_btn_off
+        else:
+            curr_sound_btn = sound_btn_on
 
         with open(r"system_files\sound_effect_loud.txt", mode="w") as loud:
             loud.write(str(slider.getValue()))
+        loud_of_game = slider.getValue()
         curr_sound_btn.draw(screen)
         home_btn.draw(screen)
         pg_wd.update(events)

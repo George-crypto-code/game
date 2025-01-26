@@ -24,7 +24,6 @@ class AllSprites(pg.sprite.Sprite):
         Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 8, HEIGHT_OF_SCREEN / 10 * 0), "horizontal")
         Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 6.5, HEIGHT_OF_SCREEN / 10 * 4), "vertical")
         Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 5, HEIGHT_OF_SCREEN / 10 * 5.5), "horizontal")
-        # Enemy(self.enemy_sprites, (WIGHT_OF_SCREEN / 10 * 2, HEIGHT_OF_SCREEN / 10 * 4), "horizontal")
         # set boxes
         self.all_boxes = pg.sprite.Group()
         Box(self.all_boxes, (WIGHT_OF_SCREEN / 10 * 0.5, HEIGHT_OF_SCREEN / 10 * 2))

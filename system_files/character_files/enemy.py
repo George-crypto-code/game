@@ -10,7 +10,7 @@ class Enemy(pg.sprite.Sprite):
     # loading of image
     image = load_image(("level_screen_images", "player.png"))
     shoot_sound = pg.mixer.Sound(r'data/sounds/sound_effects/shoot.wav')
-    shoot_sound.set_volume(update_loud_of_game())
+    shoot_sound.set_volume(update_loud_of_game()[0])
 
     def __init__(self, sprites, pos, direction):
         super().__init__(sprites)

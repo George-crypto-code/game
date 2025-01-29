@@ -38,5 +38,5 @@ HEIGHT_OF_AIM = WIGHT_OF_SCREEN / 40
 
 # loud of game
 def update_loud_of_game():
-    with open(r"system_files\sound_effect_loud.txt") as loud:
-        return float(loud.readline())
+    with open(r"system_files\sound_loud.txt") as loud:
+        return tuple(map(float, loud.readlines()))

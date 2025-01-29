@@ -2,11 +2,13 @@ import csv
 import pygame as pg
 from time import sleep
 from system_files.settings import *
+from system_files.screen_files.load_image import load_image
 from system_files.screen_files.start_screen import start_screen
 from system_files.screen_files.menu_screen import menu_screen
 from system_files.screen_files.victory_screen import victory_screen
 from system_files.screen_files.lose_screen import lose_screen
 from system_files.screen_files.options_screen import options_screen
+from system_files.character_files.health import Health
 from levels.level_1 import AllSprites as AllSprites_1
 from levels.level_2 import AllSprites as AllSprites_2
 from levels.level_3 import AllSprites as AllSprites_3
@@ -27,6 +29,7 @@ def start(screen, clock):  # func for start screen when player in it
             return
         elif ans == "options":  # if player choose the options than open options screen
             options_screen(screen, clock)
+            pg.mixer.music.set_volume(update_loud_of_game()[1])
         else:
             sleep(0.5)
             exit()
@@ -46,16 +49,21 @@ def prepare():
 
 def main(screen, clock, all_sprites, sprites, mouse_pos):
     # main gaming cycled
+    pg.mixer.music.stop()
     shoot = pg.mixer.Sound(r'data/sounds/sound_effects/shoot.wav')
     hit = pg.mixer.Sound(r'data/sounds/sound_effects/hit.wav')
     shoot_miss = pg.mixer.Sound(r'data/sounds/sound_effects/shoot_miss.wav')
-    LOUD_OF_GAME = update_loud_of_game()
+    SOUND_LOUD_OF_GAME = update_loud_of_game()[0]
     SHOOT_EVENT_TYPE = pg.USEREVENT + 1
     pg.time.set_timer(SHOOT_EVENT_TYPE, 1000)
+    pos = WIGHT_OF_SCREEN / 10 * 8, HEIGHT_OF_SCREEN / 10 * 0
+    size = WIGHT_OF_SCREEN / 10, WIGHT_OF_SCREEN / 10
+    shift = WIGHT_OF_SCREEN / 30
+    player_health_bar = Health(load_image(("level_screen_images", "full_heard.png")), pos, size, shift)
     while True:
-        shoot.set_volume(LOUD_OF_GAME)
-        hit.set_volume(LOUD_OF_GAME)
-        shoot_miss.set_volume(LOUD_OF_GAME)
+        shoot.set_volume(SOUND_LOUD_OF_GAME)
+        hit.set_volume(SOUND_LOUD_OF_GAME)
+        shoot_miss.set_volume(SOUND_LOUD_OF_GAME)
         screen.fill('black')
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -78,7 +86,7 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
             if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                 pg.mouse.set_visible(True)
                 ans = options_screen(screen, clock)
-                LOUD_OF_GAME = update_loud_of_game()
+                SOUND_LOUD_OF_GAME = update_loud_of_game()[0]
                 if ans == "home":
                     return "home"
 
@@ -93,6 +101,7 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
             return "lose"
         # main method in each level
         all_sprites.update(mouse_pos)  # it updates all sprites and draw them
+        player_health_bar.draw(screen, sprites.player.player_health)
 
         # system
         clock.tick(FPS)
@@ -104,6 +113,9 @@ if __name__ == "__main__":
     pg.mixer.init()  # for sound effects
     clock = pg.time.Clock()  # clock for tick of game
     screen = pg.display.set_mode((0, 0), pg.FULLSCREEN)  # game screen
+    pg.mixer.music.load(r"data\sounds\music\fon_music.mp3")
+    pg.mixer.music.set_volume(update_loud_of_game()[1])
+    pg.mixer.music.play(-1)
     level = prepare()
     while True:
         res = main(screen, clock, all_sprites, sprites, mouse_pos)

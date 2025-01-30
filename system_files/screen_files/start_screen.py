@@ -23,6 +23,7 @@ def start_screen(screen, clock):
                    ((WIGHT_OF_SCREEN - wight) / 2, HEIGHT_OF_SCREEN / 4 + 2 * (height + 50)), wight, height)
 
     while True:
+        screen.blit(fon, (0, 0))
         for event in pg.event.get():
             if (a := play.check_event(event)) is not None:
                 return a

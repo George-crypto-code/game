@@ -92,6 +92,7 @@ def options_screen(screen, clock):
 
         sound_loud = sound_slider.getValue()
         music_loud = music_slider.getValue()
+        pg.mixer.music.set_volume(music_loud)
         curr_sound_btn.draw(screen)
         curr_music_btn.draw(screen)
         home_btn.draw(screen)

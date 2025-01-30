@@ -9,7 +9,7 @@ def victory_screen(screen, clock, level):
     sleep(1)
     shift = 0.05
     victory = pg.mixer.Sound(r'data/sounds/sound_effects/victory.wav')
-    victory.set_volume(update_loud_of_game())
+    victory.set_volume(update_loud_of_game()[0])
     victory.play()
 
     while shift < 1:
@@ -41,6 +41,7 @@ def victory_screen(screen, clock, level):
                       ((WIGHT_OF_SCREEN - size[0]) / 2, HEIGHT_OF_SCREEN / 4 * 3), *size)
 
     while True:
+        screen.blit(fon, (0, 0))
         for event in pg.event.get():
             if next_level_flag:
                 if (a := next_level.check_event(event)) is not None:

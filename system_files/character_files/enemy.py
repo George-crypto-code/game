@@ -67,7 +67,7 @@ class Enemy(pg.sprite.Sprite):
         x, y = player.rect.center
         i, j = self.rect.center
         if all(False if box.rect.clipline((x, y), (i, j)) else True for box in all_boxes):
-            Enemy.shoot_sound.set_volume(update_loud_of_game())
+            Enemy.shoot_sound.set_volume(update_loud_of_game()[0])
             if player.player_health > 0:
                 Enemy.shoot_sound.play()
                 player.player_health -= 1

@@ -24,6 +24,7 @@ def choose_level_sprites(level):
 
 
 def start(screen, clock):  # func for start screen when player in it
+    pg.mixer.music.unpause()
     while ans := start_screen(screen, clock):  # enter screen
         if ans == "play":  # if player choose the play btn than screen close
             return
@@ -49,7 +50,7 @@ def prepare():
 
 def main(screen, clock, all_sprites, sprites, mouse_pos):
     # main gaming cycled
-    pg.mixer.music.stop()
+    pg.mixer.music.pause()
     shoot = pg.mixer.Sound(r'data/sounds/sound_effects/shoot.wav')
     hit = pg.mixer.Sound(r'data/sounds/sound_effects/hit.wav')
     shoot_miss = pg.mixer.Sound(r'data/sounds/sound_effects/shoot_miss.wav')

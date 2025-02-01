@@ -11,3 +11,6 @@ class Health:
     def draw(self, screen, player_health):
         for i in range(player_health):
             screen.blit(self.full_image, (self.pos[0] + self.shift * i, self.pos[1]))
+
+    def update(self, pos):
+        self.pos = pos

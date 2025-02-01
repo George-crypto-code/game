@@ -20,6 +20,7 @@ class Player(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.mask = pg.mask.from_surface(self.image)
         self.rect.x, self.rect.y = pos
+        self.x, self.y = pos
         self.player_angle = PLAYER_ANGLE
         self.screen = screen
         # player health
@@ -31,31 +32,39 @@ class Player(pg.sprite.Sprite):
         horizontal_top_borders, horizontal_bot_borders, vertical_left_borders, vertical_right_borders = all_borders
         if keys[pg.K_d]:
             self.rect.x += PLAYER_SPEED
+            self.x += PLAYER_SPEED
             # check on touch borders or boxes
             if (pg.sprite.collide_mask(self, vertical_right_borders) or
                     any(pg.sprite.collide_mask(self, elem) for elem in all_boxes)):
                 self.rect.x -= PLAYER_SPEED
+                self.x -= PLAYER_SPEED
 
         if keys[pg.K_a]:
             self.rect.x -= PLAYER_SPEED
+            self.x -= PLAYER_SPEED
             # check on touch borders or boxes
             if (pg.sprite.collide_mask(self, vertical_left_borders) or
                     any(pg.sprite.collide_mask(self, elem) for elem in all_boxes)):
                 self.rect.x += PLAYER_SPEED
+                self.x += PLAYER_SPEED
 
         if keys[pg.K_w]:
             self.rect.y -= PLAYER_SPEED
+            self.y -= PLAYER_SPEED
             # check on touch borders or boxes
             if (pg.sprite.collide_mask(self, horizontal_top_borders) or
                     any(pg.sprite.collide_mask(self, elem) for elem in all_boxes)):
                 self.rect.y += PLAYER_SPEED
+                self.y += PLAYER_SPEED
 
         if keys[pg.K_s]:
             self.rect.y += PLAYER_SPEED
+            self.y += PLAYER_SPEED
             # check on touch borders or boxes
             if (pg.sprite.collide_mask(self, horizontal_bot_borders) or
                     any(pg.sprite.collide_mask(self, elem) for elem in all_boxes)):
                 self.rect.y -= PLAYER_SPEED
+                self.y -= PLAYER_SPEED
 
     # rotate on mouse cursor
     def change_angle(self, pos):

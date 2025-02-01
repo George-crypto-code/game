@@ -23,6 +23,13 @@ def menu_screen(screen, clock):
                        ((left_btn + 100) * i, top_btn), wight_btn, height_btn)
         levels.append(level)
 
+    for i in range(4, 7):
+        level_path = "complete_levels" if data_levels[i][1] == "1" else "levels"
+        level = Button(load_image(('menu_screen_images', level_path, f'level_{i}.png')),
+                       load_image(('menu_screen_images', level_path, f'level_{i}_act.png')), i,
+                       ((left_btn + 100) * (i - 3), top_btn * 3), wight_btn, height_btn)
+        levels.append(level)
+
 
     arrow = Button(load_image(('menu_screen_images', 'arrow.png')), load_image(('menu_screen_images', 'arrow_act.png')),
                    0, (WIGHT_OF_MAP / 100, HEIGHT_OF_SCREEN / 100), WIGHT_OF_SCREEN / 10, HEIGHT_OF_SCREEN / 10)

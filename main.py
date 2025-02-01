@@ -12,6 +12,9 @@ from system_files.character_files.health import Health
 from levels.level_1 import AllSprites as AllSprites_1
 from levels.level_2 import AllSprites as AllSprites_2
 from levels.level_3 import AllSprites as AllSprites_3
+from levels.level_4 import AllSprites as AllSprites_4
+from levels.level_5 import AllSprites as AllSprites_5
+from levels.level_6 import AllSprites as AllSprites_6
 
 
 def choose_level_sprites(level):
@@ -21,6 +24,12 @@ def choose_level_sprites(level):
         return AllSprites_2(all_sprites, screen)
     elif level == 3:
         return AllSprites_3(all_sprites, screen)
+    elif level == 4:
+        return AllSprites_4(all_sprites, screen)
+    elif level == 5:
+        return AllSprites_5(all_sprites, screen)
+    elif level == 6:
+        return AllSprites_6(all_sprites, screen)
 
 
 def start(screen, clock):  # func for start screen when player in it
@@ -57,9 +66,9 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
     SOUND_LOUD_OF_GAME = update_loud_of_game()[0]
     SHOOT_EVENT_TYPE = pg.USEREVENT + 1
     pg.time.set_timer(SHOOT_EVENT_TYPE, 1000)
-    pos = WIGHT_OF_SCREEN / 10 * 8, HEIGHT_OF_SCREEN / 10 * 0
-    size = WIGHT_OF_SCREEN / 10, WIGHT_OF_SCREEN / 10
-    shift = WIGHT_OF_SCREEN / 30
+    pos = (sprites.player.rect.x, sprites.player.rect.y)
+    size = WIGHT_OF_SCREEN / 50, WIGHT_OF_SCREEN / 50
+    shift = WIGHT_OF_SCREEN / 80
     player_health_bar = Health(load_image(("level_screen_images", "full_heard.png")), pos, size, shift)
     while True:
         shoot.set_volume(SOUND_LOUD_OF_GAME)
@@ -102,6 +111,7 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
             return "lose"
         # main method in each level
         all_sprites.update(mouse_pos)  # it updates all sprites and draw them
+        player_health_bar.update((sprites.player.x, sprites.player.y))
         player_health_bar.draw(screen, sprites.player.player_health)
 
         # system

@@ -22,7 +22,7 @@ def victory_screen(screen, clock, level):
         clock.tick(FPS)
     size = WIGHT_OF_SCREEN / 10, WIGHT_OF_SCREEN / 10
     next_level_flag, previous_level_flag = False, False
-    if level < 3:
+    if level < 6:
         next_level_flag = True
         next_level_left, next_level_top = WIGHT_OF_SCREEN / 10 * 6, HEIGHT_OF_SCREEN / 4 * 3
         next_level = Button(load_image(('victory_screen_images', 'next_level.png')),

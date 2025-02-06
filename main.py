@@ -1,4 +1,5 @@
 import csv
+import sys
 import pygame as pg
 from time import sleep
 from system_files.settings import *
@@ -42,7 +43,7 @@ def start(screen, clock):  # func for start screen when player in it
             pg.mixer.music.set_volume(update_loud_of_game()[1])
         else:
             sleep(0.5)
-            exit()
+            sys.exit()
 
 
 def prepare():
@@ -76,8 +77,6 @@ def main(screen, clock, all_sprites, sprites, mouse_pos):
         shoot_miss.set_volume(SOUND_LOUD_OF_GAME)
         screen.fill('black')
         for event in pg.event.get():
-            if event.type == pg.QUIT:
-                exit()
             if event.type == pg.MOUSEMOTION:
                 mouse_pos = event.pos
                 pg.mouse.set_visible(False)
